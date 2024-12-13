@@ -31,7 +31,7 @@ Molecules within each domain are serialized and concatenated, separated by the `
 Domains are sorted by character length in descending order.
 
 ## Full list of domains
-coresponding to order in train + valid + test set.
+corresponding to order in train + valid + test set.
 
 |     | super_domain                           | set                                    | split   |    # molecules |   character-length |
 |----:|:---------------------------------------|:---------------------------------------|:--------|-------:|-----------:|
