@@ -16,6 +16,8 @@ checkpoints_backup/
 
 # slurm log files
 watch_folder/
+wandb/*
+models/*
 
 temp_and_playground/
 
