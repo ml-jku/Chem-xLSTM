@@ -1,0 +1,37 @@
+name: chem_xlstm
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - cuda=12.1 # set to a specific version of CUDA YOUR GPU SUPPORTS
+  - cuda-nvcc=12.1 # cuda-nvcc is necessary for compiling CUDA code
+  - python=3.11
+  - pip
+  - pytorch=2.2.0
+  - pytorch-cuda=12.1#
+  - rdkit[version='>=2019.03.2']
+  - cmake
+  - ninja
+  - smina[version='>=2017.11.9']
+  - openbabel
+  - dask
+  - pip:
+    - accelerate>=0.26.0
+    - ipykernel #==6.29.3  
+    - matplotlib #==3.8.4
+    - numpy<2.0 #==1.26.4
+    - omegaconf #==2.3.0
+    - pandas #==2.2.2
+    - scipy #==1.13.0
+    - seaborn #==0.13.2
+    - torchmetrics #==1.2.1
+    - tqdm #==4.66.4
+    - transformers==4.44.2
+    - flash-attn
+    - wandb #==0.17.0
+    - fvcore
+    - fcd_torch
+    #- mamba_ssm==2.2.2
+
