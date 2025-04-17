@@ -24,6 +24,10 @@ pip install -e .
 
 This package also supports the use of S4 using [s4dd](https://github.com/molML/s4-for-de-novo-drug-design), as well as Mamba and the Llama Transformer Model. If you want to enable flash attention for the transformer model, install `flash-attn` separately.
 
+Minor: (I've had to use a minor modification to ```xlstm/blocks/slstm/src/cuda_init.py``` where ```os.environ["CUDA_LIB"] = os.path.join(os.path.split(torch.utils.cpp_extension.include_paths(cuda=True)[-1])[0], "lib")``` the cuda argument has to be dropped due to the torch version, be aware this issue might exist)
+
+Setting up the env was the hardest part ;)
+
 ### Model Weights and Pre-Processed Data
 
 Model weights and the processed dataset can be downloaded [here](https://ml.jku.at/research/Bio-xLSTM/downloads/Chem-xLSTM/data/). To reproduce the results, place the model weights in a `checkpoints/` folder and copy the dataset to the `data/` folder.
@@ -50,17 +54,25 @@ The repository comes with both datasets: [ChEMBL v31 SMILES Dataset](https://git
 
 ### Model Training
 
-To train a Chem-xLSTM model, set the desired model parameters as input and run for example:
+To train an xLSTM model for example run (adjust the batch size and dim to your GPU memory):
 
+xLSTM 1.6M model which takes  ~8.5 GB of GPU memory and training one epoch takes ~25 minutes:
 ```bash
-python chemxlstm/train.py
+python chemxlstm/train.py --model_class xLSTM --model_dim 256 --state_dim 64 --n_layers 4 --n_heads 1 --n_max_epochs 100 --batch_size 512 --device cuda:0 --learning_rate 5e-3 --dropout 0.25 --vocab_size 37 --sequence_length 100 --logdir ./models/ --training_molecules_path ./data/chemblv31/train.zip --val_molecules_path ./data/chemblv31/valid.zip --patience 5 --delta 1e-5 --save_per_epoch 3 --no_denovodesign
 ```
 
-To train an S4 model for example run:
-
+xLSTM 14.8M model
 ```bash
-python chemxlstm/train.py --model_class S4 --model_dim 256 --state_dim 64 --n_layers 4 --n_ssm 1 --n_max_epochs 100 --batch_size 2048 --device cuda:0 --learning_rate 5e-3 --dropout 0.25 --vocab_size 37 --sequence_length 100 --logdir ./models/ --training_molecules_path ./datasets/chemblv31/train.zip --val_molecules_path ./datasets/chemblv31/valid.zip --patience 5 --delta 1e-5 --save_per_epoch 3 --no_denovodesign
+python chemxlstm/train.py --model_class=xLSTM --device=cuda:1 --n_layers=9 --model_dim=512 --n_heads=8 --batch_size=1024 --warmup_steps=4000
 ```
+
+to train a model on in-context molecular generation, you just set ```--training_molecules_path=./data/icst/train.zip``` and the ```--val_molecules_path=./data/icst/valid.zip```
+```bash
+python ./chemxlstm/train.py --model_class=xLSTM --device=cuda:0 --n_layers=9 --model_dim=512 --n_heads=8 --logdir=./models/icst/ --vocab_size=100 --sequence_length=2048 --training_molecules_path=./data/icst/train.zip --val_molecules_path=./data/icst/valid.zip --no_denovodesign --batch_size=8 --warmup_steps=400 --permute_augmentation --learning_rate=1e-3 --patience=10 --accumulation_steps=4
+```
+
+If you want to finetune a pretrained model, set the model path: e.g.: ```--model_path=./models/xLSTM-14.8M-ed512_hid64_l9_he8_162/``` (here you need to set the n_heads (=n_heads) explicitly). The max sequence length and vocab_size of the pretrained model is automatically overwritten if stated explicitly in the command line.
+
 
 ## Evaluation
 
@@ -69,18 +81,19 @@ python chemxlstm/train.py --model_class S4 --model_dim 256 --state_dim 64 --n_la
 If you remove the parameter ```--no_denovodesign``` from the training script, this will result in generating 102,400 molecules from the last model-epoch at different temperatures. The resulting molecules can be evaluated calling:
 
 ```bash
-python ./chemxlstm/evaluate.py
+python chemxlstm/evaluate.py --model_path ./models/xLSTM-0.0M-ed64_hid64_l1_he1_270/epoch-006 --model_class xLSTM --n_heads=1
 ```
-This evaluates all relevant files and saves a ```metrics.csv``` file in the coresponding folders.
+The evaluation is saved as ```metrics.csv``` in the coresponding folders (as well as the cross-entropy loss per molecule as .npy).
 
 ### Conditional Generation Evaluation
 
 To evaluate the model on the Conditional Generation ICST dataset, run the following and adjust to your parameters:
 
-```bash
-python ./chemxlstm/eval_cond_gen.py --model_path="./models/icst_v2/Mamba-14.8M-ed512_hid64_l8_he8_465/" --model_class Mamba --device cuda:0 --n_ssm 8 --batch_size 1024 --context_path=./data/icst/test.zip --n_designs 1024 --mode gen --n_context_molecules 1
-```
+The parameter n_context_molecules is the number of molecules to be used as context for each generated molecule. The parameter n_designs is the number of designs per context molecule.
 
+```bash
+python ./chemxlstm/evaluate_cond_gen.py --model_path="./models/icst/xLSTM-14.8M-ed512_hid64_l8_he8_465/" --model_class xLSTM --device cuda:0 --n_heads 8 --batch_size 32 --context_path=./data/icst/test.zip --n_designs 1024 --mode gen --n_context_molecules 1
+```
 
 ## Acknowledgments
 
