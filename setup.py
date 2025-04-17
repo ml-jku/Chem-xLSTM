@@ -13,8 +13,10 @@ setup(
     author="Philipp Seidl",
     author_email="ph.seidl92@gmail.com",
     packages=find_packages(exclude=["tests*"]),
-    install_requires="""xlstm@git+https://github.com/NX-AI/xlstm.git
-        git+https://github.com/molML/s4-for-de-novo-drug-design.git
+    install_requires="""s4dd@git+https://github.com/molML/s4-for-de-novo-drug-design.git
+        xlstm
+        einops
+        opt_einsum
         numpy
         tqdm
         scikit-learn
@@ -25,7 +27,11 @@ setup(
         matplotlib
         torch
         torchvision
-        wandb        
+        wandb
+        fcd_torch   
+        omegaconf   
+        dacite  
+        fvcore
         swifter""".split(), #        mamba_ssm@git+https://github.com/state-spaces/mamba.git
     description="",
     long_description=long_description,

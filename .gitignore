@@ -5,6 +5,10 @@ data.tar.gz
 */.ipynb_checkpoints/*
 *.lprof
 
+# wandb folder
+wandb/
+models/
+
 .DS_Store
 .idea/
 outputs/
@@ -128,5 +132,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
 
 # End of https://www.gitignore.io/api/python
