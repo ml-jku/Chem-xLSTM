@@ -28,15 +28,11 @@ Minor: (I've had to use a minor modification to ```xlstm/blocks/slstm/src/cuda_i
 
 Setting up the env was the hardest part ;)
 
-### Model Weights and Pre-Processed Data
-
-Model weights and the processed dataset can be downloaded [here](https://ml.jku.at/research/Bio-xLSTM/downloads/Chem-xLSTM/data/). To reproduce the results, place the model weights in a `checkpoints/` folder and copy the dataset to the `data/` folder.
-
 ### Applications
 
 For an easy start with Chem-xLSTM applications, we provide a sample notebooks:
 
-- [`examples/train.ipynb`](https://github.com/ml-jku/Chem-xLSTM/blob/main/examples/train.ipynb): This notebook demonstrates how to train a Chem-xLSTM model.
+- [`examples/train.ipynb`](https://github.com/ml-jku/Chem-xLSTM/blob/main/examples/train.ipynb): This notebook demonstrates how to train a Chem-xLSTM model. (currently under construction)
 
 
 ### Repository Structure
