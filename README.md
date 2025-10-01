@@ -69,6 +69,9 @@ python ./chemxlstm/train.py --model_class=xLSTM --device=cuda:0 --n_layers=9 --m
 
 If you want to finetune a pretrained model, set the model path: e.g.: ```--model_path=./models/xLSTM-14.8M-ed512_hid64_l9_he8_162/``` (here you need to set the n_heads (=n_heads) explicitly). The max sequence length and vocab_size of the pretrained model is automatically overwritten if stated explicitly in the command line.
 
+## Model weights
+
+Pretrained model weights can be downloaded [here](https://cloud.ml.jku.at/s/qpAS9iftYCN95by). It includes a pretrained xLSTM with 15M parameters each for chemblv31 and ICST.
 
 ## Evaluation
 
@@ -108,4 +111,5 @@ If you found this work helpful in your project, please cite
     url={https://openreview.net/forum?id=IjbXZdugdj}
 }
 ```
+
 
