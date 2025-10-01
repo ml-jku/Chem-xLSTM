@@ -10,7 +10,7 @@ This repository provides the code necessary to reproduce the experiments present
 - [DNA-xLSTM](https://github.com/ml-jku/DNA-xLSTM/)
 - [Prot-xLSTM](https://github.com/ml-jku/Prot-xLSTM/)
 
-## Quickstart
+## Quickstart [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ml-jku/Chem-xLSTM/blob/main/examples/chem_xlstm_minimal_colab_example.ipynb)
 
 ### Installation
 
@@ -108,3 +108,4 @@ If you found this work helpful in your project, please cite
     url={https://openreview.net/forum?id=IjbXZdugdj}
 }
 ```
+
