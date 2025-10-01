@@ -22,7 +22,7 @@ setup(
         scikit-learn
         scipy
         pandas
-        rdkit-pypi
+        rdkit
         transformers
         matplotlib
         torch
@@ -45,4 +45,5 @@ setup(
     ],
     include_package_data=True,
     extras_require={'dev': ['pytest']},
+
 )
