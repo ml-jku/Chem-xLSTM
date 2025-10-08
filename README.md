@@ -94,10 +94,9 @@ The parameter n_context_molecules is the number of molecules to be used as conte
 python ./chemxlstm/evaluate_cond_gen.py --model_path="./models/icst/xLSTM-14.8M-ed512_hid64_l8_he8_465/" --model_class xLSTM --device cuda:0 --n_heads 8 --batch_size 32 --context_path=./data/icst/test.zip --n_designs 1024 --mode gen --n_context_molecules 1
 ```
 
-### Conditional Generation Example
+### Conditional Generation Example [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ml-jku/Chem-xLSTM/blob/main/examples/chem_xlstm_few_shot_conditional_molecule_generation.ipynb)
 
-We provide a simple notebook that can be used to generate molecules given a few examples using a pretrained model on the ICST dataset:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ml-jku/Chem-xLSTM/blob/main/examples/chem_xlstm_few_shot_conditional_molecule_generation.ipynb)
+We provide a simple notebook that can be used to generate molecules given a few examples using a pretrained model on the ICST dataset.
 In this case, we show 6-shot molecule generation.
 
 ## Acknowledgments
@@ -117,6 +116,7 @@ If you found this work helpful in your project, please cite
     url={https://openreview.net/forum?id=IjbXZdugdj}
 }
 ```
+
 
 
 
